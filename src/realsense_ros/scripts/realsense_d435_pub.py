@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# /home/lcy-magic/Tracer_WS/src/realsense_ros/scripts/realsense_d435_pub.py
+
 
 import rospy
 import pyrealsense2 as rs
@@ -10,6 +9,7 @@ from cv_bridge import CvBridge
 import os
 import open3d as o3d
 import json
+import rospkg
 
 def save_intrinsics(color_intrin, depth_intrin, png_depth_scale):
     # 创建 data 目录
@@ -76,7 +76,10 @@ def main():
     config.enable_stream(rs.stream.depth, 848, 480, rs.format.z16, 15)
     profile = pipeline.start(config)
     # realsense高级模式配置
-    with open("/home/lcy-magic/Tracer_WS/src/realsense_ros/config/Costume_D435.json", "r") as f:
+    rospack = rospkg.RosPack()
+    pkg_path = rospack.get_path('realsense_ros')
+    json_file_path = os.path.join(pkg_path, "config/Costume_D435.json")
+    with open(json_file_path, "r") as f:
         json_data = f.read()
     dev = pipeline.get_active_profile().get_device()
     adv_mode = rs.rs400_advanced_mode(dev)

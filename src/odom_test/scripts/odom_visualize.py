@@ -1,7 +1,9 @@
-#!/home/lcy-magic/anaconda3/envs/TRACER/bin/python
+
 import rosbag
 import matplotlib.pyplot as plt
 from nav_msgs.msg import Odometry
+import rospkg
+import os
 
 # 定义颜色列表，用于不同 odom 轨迹显示不同颜色
 COLORS = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
@@ -58,8 +60,13 @@ def visualize_odom_bags(bag_paths, topics):
     plt.show()
 
 if __name__ == '__main__':
-    # 请替换为实际的 rosbag 包路径列表
-    bag_paths = ['/home/lcy-magic/Tracer_WS/odom_wheel_2025-06-11-21-16-28.bag']
+    # 使用 rospkg 获取当前包所在的工作空间路径
+    rospack = rospkg.RosPack()
+    ws_path = os.path.dirname(rospack.get_path('odom_test'))
+    # 只保留文件名，自动拼接路径
+    bag_filenames = ['odom_wheel_2025-06-11-21-16-28.bag']
+    bag_paths = [os.path.join(ws_path, filename) for filename in bag_filenames]
+
     # 请替换为实际的里程计话题列表
     topics = ['/odom']
     visualize_odom_bags(bag_paths, topics)

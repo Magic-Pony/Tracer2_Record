@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# /home/lcy-magic/Tracer_WS/src/remote_record/scripts/remote_record.py
+
 
 import os
 import rospy
@@ -12,8 +11,13 @@ from tf.transformations import quaternion_matrix, translation_matrix, concatenat
 import tf
 import collections
 from message_filters import ApproximateTimeSynchronizer, Subscriber
+import rospkg
 
-base_path = "/home/lcy-magic/Tracer_WS/src/remote_record/data/room303"
+# 使用 rospkg 获取包路径
+rospack = rospkg.RosPack()
+pkg_path = rospack.get_path('remote_record')
+base_path = os.path.join(pkg_path, "recorded_episode/room303")
+
 # 时间戳阈值，单位：秒，设置为 1 毫秒
 TIMESTAMP_THRESHOLD = 0.001
 # 存储最近的里程计消息，最多保存 100 条

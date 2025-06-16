@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>odom_test</name>
+  <version>0.0.0</version>
+  <description>The odom_test package</description>
+
+  <maintainer email="your_email@example.com">your_name</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>rospy</build_depend>
+  <exec_depend>rospy</exec_depend>
+  <!-- 添加 rosbag 依赖 -->
+  <build_depend>rosbag</build_depend>
+  <exec_depend>rosbag</exec_depend>
+  <build_depend>nav_msgs</build_depend>
+  <exec_depend>nav_msgs</exec_depend>
+
+  <export>
+  </export>
+</package>

@@ -1,0 +1,17 @@
+<launch>
+    <arg name="robot_namespace" default="/"/>
+    <arg name="urdf_extras" default="$(find tracer_description)/urdf/empty.urdf"/>
+    <!-- 修改为实际的 URDF 文件路径 -->
+    <!-- <param name="robot_description" textfile="$(find remote_record)/urdf/tracer2_a2m12_d435i.xacro" /> -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find remote_record)/urdf/tracer2_a2m12_d435i.xacro'
+        robot_namespace:=$(arg robot_namespace)
+        urdf_extras:=$(arg urdf_extras)" />
+
+    <!-- 启动 robot_state_publisher 节点，用于发布机器人状态 -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" ></node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" />
+    
+    <!-- 启动 rviz 节点，使用默认配置打开 -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tracer_description)/rviz/model_display.rviz" />
+</launch>
+

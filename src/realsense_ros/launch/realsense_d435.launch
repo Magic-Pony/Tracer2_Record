@@ -1,0 +1,3 @@
+<launch>
+  <node name="realsense_node" pkg="realsense_ros" type="realsense_d435_pub.py" output="screen"/>
+</launch>

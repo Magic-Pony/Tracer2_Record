@@ -1,0 +1,23 @@
+<launch>
+    <arg name="robot_namespace" default="/"/>
+    <arg name="urdf_extras" default="$(find tracer_description)/urdf/empty.urdf"/>
+    <param name="robot_description" command="$(find xacro)/xacro '$(find remote_record)/urdf/tracer2_a2m12_d435i.xacro'
+        robot_namespace:=$(arg robot_namespace)
+        urdf_extras:=$(arg urdf_extras)" />
+        
+    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" ></node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tracer_description)/rviz/model_display.rviz" /> -->
+    
+    <include file="$(find tracer_base)/launch/tracer_base.launch" >
+        <arg name="port_name" default="can0" />
+        <arg name="simulated_robot" default="false" />
+    </include>
+
+    <!-- 启动 RGB 和 Depth 节点 -->
+    <node pkg="realsense_ros" type="realsense_d435_pub.py" name="realsense_d435_pub" output="screen" />
+
+    <!-- 启动数据记录节点 -->
+    <node pkg="remote_record" type="remote_record.py" name="remote_record" output="screen" />
+
+</launch>
